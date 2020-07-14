@@ -1,13 +1,13 @@
 
 import express, { Request, Response, NextFunction } from "express"
 import { userRouter } from "./routers/user-router"
-import { reimbursementRouter } from "./routers/reimbursement-router"
 
 import { InvalidCredentials } from "./errors/Invalid-Credentials"
 import { getUserByUsernameAndPassword } from "./daos/users-dao"
 
-import { loggingMiddleware } from "./middleware/logging-Middleware"
+import { loggingMiddleware } from "./middleware/logging-middleware"
 import { sessionMiddleware } from "./middleware/session-middleware"
+import { corsFilter } from "./middleware/cors-filter"
 
 
 const app = express() //out application from express
@@ -19,10 +19,12 @@ app.get("/", (req, res) => {
 app.use(express.json()) 
 
 app.use(loggingMiddleware)
+
+app.use(corsFilter)
+
 app.use(sessionMiddleware)
 
 app.use("/users", userRouter)
-app.use("/reimbursements", reimbursementRouter)
 
 app.post("/login", async (req: Request, res: Response, next: NextFunction)=>{
     let {username, password} =  req.body

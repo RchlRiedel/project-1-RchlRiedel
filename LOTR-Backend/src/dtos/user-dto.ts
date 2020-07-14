@@ -7,5 +7,4 @@ export class UserDTO {
     last_name : string
     email : string
     role : string 
-    role_id: number
 }

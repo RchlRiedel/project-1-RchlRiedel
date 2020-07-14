@@ -1,4 +1,3 @@
-import { Role } from "./Role";
 
 //The User model keeps track of users information.
 
@@ -9,5 +8,5 @@ export class User {
     firstName: string; // not null
     lastName: string; // not null
     email: string; // not null
-    role: Role // not null
+    role: string // not null
   }
