@@ -79,7 +79,7 @@ export async function updateUser (updatedUser:User): Promise <User> {
             await client.query(`update project_0.users set email = $1 where user_id = $2;`,
                                 [updatedUser.email, updatedUser.userId])
         }
-        if (updatedUser.role){
+        if (updatedUser.role){ //figure out what you're doing for this...
             let roleId = await client.query(`select r.role_id from project_0.roles r where r."role" = $1;`, [updatedUser.role])
             if (roleId.rowCount === 0 ){ //if role not found
                 throw new Error("Role Not Found")

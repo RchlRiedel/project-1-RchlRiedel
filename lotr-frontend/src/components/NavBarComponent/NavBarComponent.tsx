@@ -41,70 +41,41 @@ export const NavBarComponent:FunctionComponent<any> = (props) => {
   };
 
   let menuItems = []
-  let profileMenuItems = []
 
-//   menuItems.push(<MenuItem onClick={handleClose}><Link to= "/login">Login</Link></MenuItem>)
+  menuItems.push(
+    <MenuItem onClick={handleClose}><Link to= "/home">Home</Link></MenuItem>,
+    <MenuItem onClick={handleClose}><Link to= "/login">Login</Link></MenuItem>
+    //<MenuItem onClick={handleClose}><Link to= "/sign-up">Sign Up</Link></MenuItem>)
+  )
+          {/*EDIT THE LINKS IN THE BUTTONS */}
 
   if(props.user){
     menuItems.push(
-        <MenuItem onClick={handleClose}><Link to='/all-users'>Meet The Fellowship</Link></MenuItem>,
-        <MenuItem onClick={handleClose}><Link to = '/'>Log Out</Link></MenuItem>
-    )
-
-    profileMenuItems.push(
-        <MenuItem onClick={handleClose}><Link to='/profile'>User Profile</Link></MenuItem>,
-        <MenuItem onClick={handleClose}><Link to = '/account'>Account Details</Link></MenuItem>
-    )
+        <MenuItem onClick={handleClose}><Link to = '/'>Log Out</Link></MenuItem>, //figure out how to make a component for this... different path?
+        <MenuItem onClick={handleClose}><Link to={`/profile/${(props.user)?props.user.userId : '0' }`}>User Profile</Link></MenuItem>,
+        <MenuItem onClick={handleClose}><Link to ={`/update-account/${(props.user)?props.user.userId : '0' }`}>Edit Account Details</Link></MenuItem>
+        )
   }
-//    if(props.user && props.user.role === 'Admin'){
+//    if(props.user && props.user.role === 'Admin'){ for get all users (if posssible)
     return (
-        <nav>
-      {/* <FormGroup>
-        <FormControlLabel
-          control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup> */}
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton onClick={handleClick} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-            <Menu id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}> 
-            {menuItems}
-            </Menu>
-          <Typography variant="h6" className={classes.title}>
-            The Fellowship of the Ring
-          </Typography>
-          {auth && (
-            <div>
-              <IconButton onClick= {handleClick}>
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}>
-                {profileMenuItems}
+      <nav>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton onClick={handleClick} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+              <Menu id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}> 
+              {menuItems}
               </Menu>
-            </div>
-        )}
-        </Toolbar>
-      </AppBar>
-    </nav>
+            <Typography variant="h6" className={classes.title}>
+              The Fellowship of the Ring: Member Log
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </nav>
   );
 }

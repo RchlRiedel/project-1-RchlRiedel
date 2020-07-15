@@ -11,7 +11,7 @@ export const userRouter = express.Router()
 //Use login
 userRouter.use(authentificationMiddleware)
 
-//Find Users 
+//Find Users                                 Get rid of this Finance manager role!
 userRouter.get("/", authorizationMiddleware(["Finance-manager", "Admin"], false), async (req:Request, res:Response, next:NextFunction)=>{
     try {
         let allUsers = await getAllUsers() 
@@ -20,6 +20,16 @@ userRouter.get("/", authorizationMiddleware(["Finance-manager", "Admin"], false)
         next(e)
     }})
 
+//Get user profile information                       I don't think I need anything in this array
+//ON SECOND THOUGHT this would be too complicated... maybe later
+// userRouter.get("/-profiles", authorizationMiddleware([], true), async (req:Request, res:Response, next:NextFunction)=>{
+//     try {
+//         let allUserProfiles = await getAllUserProfiles() 
+//         res.json(allUserProfiles)
+//     } catch(e){
+//         next(e)
+//     }})
+    
 //Find user by id
 userRouter.get("/:userId",  authorizationMiddleware(["Finance-manager", "Admin"], true), async (req:Request, res:Response, next:NextFunction)=>{
     let {userId} = req.params
