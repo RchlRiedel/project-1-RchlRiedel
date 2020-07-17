@@ -2,7 +2,7 @@
 import express, { Request, Response, NextFunction } from 'express'
 import { authentificationMiddleware } from '../middleware/authentification-middleware'
 import { authorizationMiddleware } from '../middleware/authorization-middleware'
-import { getAllUsers, updateUser, findUsersById } from '../daos/users-dao'
+import { getAllUsers, updateUser, findUsersById } from '../daos/SQL/users-dao'
 import { User } from '../models/User'
 import { UserIdNumberNeededError } from '../errors/User-Id-Number-Needed-Error'
 
@@ -12,7 +12,7 @@ export const userRouter = express.Router()
 userRouter.use(authentificationMiddleware)
 
 //Find Users                                 Get rid of this Finance manager role!
-userRouter.get("/", authorizationMiddleware(["Finance-manager", "Admin"], false), async (req:Request, res:Response, next:NextFunction)=>{
+userRouter.get("/", authorizationMiddleware(["Admin"], false), async (req:Request, res:Response, next:NextFunction)=>{
     try {
         let allUsers = await getAllUsers() 
         res.json(allUsers)
@@ -45,9 +45,10 @@ userRouter.get("/:userId",  authorizationMiddleware(["Finance-manager", "Admin"]
     }
 })
 
+
 //Update user
 userRouter.patch("/", authorizationMiddleware(["Admin"], false), async (req:Request, res: Response, next:NextFunction) => {
-    let {userId, username, password, firstName, lastName, email, role } = req.body
+    let {userId, username, password, firstName, lastName, email, role, image } = req.body
 
     if (!userId || isNaN(req.body.userId)){
         next (new UserIdNumberNeededError)
@@ -59,7 +60,8 @@ userRouter.patch("/", authorizationMiddleware(["Admin"], false), async (req:Requ
             firstName,
             lastName,
             email,
-            role
+            role,
+            image
         }
         updatedUser.username = username || undefined
         updatedUser.password = password || undefined
@@ -67,6 +69,7 @@ userRouter.patch("/", authorizationMiddleware(["Admin"], false), async (req:Requ
         updatedUser.lastName = lastName || undefined
         updatedUser.email = email || undefined
         updatedUser.role = role || undefined
+        updatedUser.image = image || undefined
 
         try {
             let updatedUserResults = await updateUser(updatedUser)

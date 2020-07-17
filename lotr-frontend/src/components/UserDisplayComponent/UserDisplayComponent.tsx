@@ -43,7 +43,7 @@ export const UserDisplayComponent: FunctionComponent<IUserDisplayProps> = (props
           </Typography>
         </CardContent>
         {/* <CardActions>
-           <Button size="small">Learn More</Button>
+           <Button size="small">Update User</Button>
           We want this to be the button to press to update profile
         </CardActions> */}
       </Card>

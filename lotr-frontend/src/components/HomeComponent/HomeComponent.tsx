@@ -17,10 +17,12 @@ const SignUpButton = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   margin: {
-    margin: "auto"
+    margin: theme.spacing(1),
   },
   root: { //figure out spacing for this (so it's relative to screen size and centered)
-    maxWidth: 600
+    margin: "auto",
+    maxWidth: 600,
+    justifyContent: "center"
   }
 }));
 
@@ -33,7 +35,7 @@ export const HomeComponent:FunctionComponent<any> = (props) =>{
         Insert image of middle earth here! (or slideshow?)*/}
         <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-                Become part of the expedition to save the world!                 
+                Become part of an expedition to save the world!                 
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
                 Join the Fellowship of the Ring, a selective, diverse 
@@ -43,11 +45,12 @@ export const HomeComponent:FunctionComponent<any> = (props) =>{
                 There’s only an 11% chance of dying!
             </Typography>
         </CardContent>
-        <CardActions>
+        <CardActions className={classes.root}>
           {/*EDIT THE LINKS IN THE BUTTONS */}
-            <SignUpButton variant="contained" color="primary" className={classes.margin}>
-            <   Link to= "/sign-up">Sign Up Now!</Link>
-            </SignUpButton>
+            <Link to= "/register" style={{ textDecoration:"none"}}><SignUpButton variant="contained" color="primary" className={classes.margin}>
+              Sign Up Now!
+            </SignUpButton></Link>  
+            or  <Link to="/login">Login</Link>
         </CardActions>
     </Card>
   )

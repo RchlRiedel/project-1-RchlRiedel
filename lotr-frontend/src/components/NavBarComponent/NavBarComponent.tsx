@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const NavBarComponent:FunctionComponent<any> = (props) => {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true); //is this working?
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -42,19 +41,22 @@ export const NavBarComponent:FunctionComponent<any> = (props) => {
 
   let menuItems = []
 
-  menuItems.push(
-    <MenuItem onClick={handleClose}><Link to= "/home">Home</Link></MenuItem>,
-    <MenuItem onClick={handleClose}><Link to= "/login">Login</Link></MenuItem>
-    //<MenuItem onClick={handleClose}><Link to= "/sign-up">Sign Up</Link></MenuItem>)
-  )
-          {/*EDIT THE LINKS IN THE BUTTONS */}
+  {/*EDIT THE LINKS TO LOOK NICE */}
 
   if(props.user){
     menuItems.push(
-        <MenuItem onClick={handleClose}><Link to = '/'>Log Out</Link></MenuItem>, //figure out how to make a component for this... different path?
-        <MenuItem onClick={handleClose}><Link to={`/profile/${(props.user)?props.user.userId : '0' }`}>User Profile</Link></MenuItem>,
-        <MenuItem onClick={handleClose}><Link to ={`/update-account/${(props.user)?props.user.userId : '0' }`}>Edit Account Details</Link></MenuItem>
+        //Logout not working...  
+        //<MenuItem onClick={handleClose}><Link to = "/home">Log Out</Link></MenuItem>, //figure out how to make a component for this... different path?
+        <Link to={`/profile/${(props.user)?props.user.userId : '0' }`} style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>User Profile</MenuItem></Link>,
+        <Link to ={`/update-account/${(props.user)?props.user.userId : '0' }`} style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Edit Account Details</MenuItem></Link>
+        //info page?
         )
+  } else {
+    menuItems.push(
+      <Link to= "/home" style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Home</MenuItem></Link>,
+      <Link to= "/login" style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Login</MenuItem></Link>,
+      <Link to= "/register" style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Sign Up</MenuItem></Link>
+    )
   }
 //    if(props.user && props.user.role === 'Admin'){ for get all users (if posssible)
     return (
@@ -72,7 +74,7 @@ export const NavBarComponent:FunctionComponent<any> = (props) => {
               {menuItems}
               </Menu>
             <Typography variant="h6" className={classes.title}>
-              The Fellowship of the Ring: Member Log
+              The Fellowship of the Ring Membership
             </Typography>
           </Toolbar>
         </AppBar>

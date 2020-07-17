@@ -8,9 +8,9 @@ export function authorizationMiddleware(roles:string[], currentUser: Boolean){ /
         let allowed = false
             
         for (const role of roles){//to allow a given role
-            if (req.session.user.role.role === role){
+            if (req.session.user.role === role){
                 allowed =true
-                console.log(`role: ${role}, input role:${req.session.user.role.role}`);
+                console.log(`role: ${role}, input role:${req.session.user.role}`);
             }
         }
         if (currentUser){  //if we are checking for current user
