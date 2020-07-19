@@ -31,7 +31,7 @@ userRouter.get("/", authorizationMiddleware(["Admin"], false), async (req:Reques
 //     }})
     
 //Find user by id
-userRouter.get("/:userId",  authorizationMiddleware(["Finance-manager", "Admin"], true), async (req:Request, res:Response, next:NextFunction)=>{
+userRouter.get("/:userId",  authorizationMiddleware(["Admin"], true), async (req:Request, res:Response, next:NextFunction)=>{
     let {userId} = req.params
     if(isNaN(+userId)){
         next(new UserIdNumberNeededError)
@@ -47,7 +47,7 @@ userRouter.get("/:userId",  authorizationMiddleware(["Finance-manager", "Admin"]
 
 
 //Update user
-userRouter.patch("/", authorizationMiddleware(["Admin"], false), async (req:Request, res: Response, next:NextFunction) => {
+userRouter.patch("/update", async (req:Request, res: Response, next:NextFunction) => {
     let {userId, username, password, firstName, lastName, email, role, image } = req.body
 
     if (!userId || isNaN(req.body.userId)){

@@ -13,6 +13,7 @@ import { corsFilter } from "./middleware/cors-filter"
 import { UserSignUpError } from "./errors/User-Sign-Up-Error"
 import { NoUserLoggedInError } from "./errors/No-User-Logged-In-Error"
 
+//import { userTopic } from "./messaging"
 // import { userTopic} from "./messaging"
 // import '.event-listeners/new-user'
 
@@ -83,12 +84,14 @@ app.post("/login", async (req: Request, res: Response, next: NextFunction)=>{
 
 //logout
 app.delete("/logout", async (req: Request, res: Response, next: NextFunction)=>{
+    
+
     if (!req.session.user) {
         next(new NoUserLoggedInError())
     } else {
         try {
             req.session.user = null
-            res.send("Successfully logged out. Please proceed to home page.")
+            res.json(req.session.user)
         } catch(e) {
             next(e)
         }

@@ -16,13 +16,18 @@ const SignUpButton = withStyles((theme) => ({
 }))(Button);
 
 const useStyles = makeStyles((theme) => ({
-  margin: {
-    margin: theme.spacing(1),
-  },
   root: { //figure out spacing for this (so it's relative to screen size and centered)
     margin: "auto",
     maxWidth: 600,
     justifyContent: "center"
+  },
+  submit: {
+    margin: theme.spacing(1),
+    backgroundColor: 'green',
+    color: 'white',
+    //background color? for when hovering/submitting?
+    //fontFamily: '',
+    fontSize: 16,
   }
 }));
 
@@ -47,10 +52,10 @@ export const HomeComponent:FunctionComponent<any> = (props) =>{
         </CardContent>
         <CardActions className={classes.root}>
           {/*EDIT THE LINKS IN THE BUTTONS */}
-            <Link to= "/register" style={{ textDecoration:"none"}}><SignUpButton variant="contained" color="primary" className={classes.margin}>
+            <Link to= "/register" style={{ textDecoration:"none"}}><SignUpButton variant="contained" className={classes.submit}>
               Sign Up Now!
             </SignUpButton></Link>  
-            or  <Link to="/login">Login</Link>
+             or  <Link to="/login">Login</Link>
         </CardActions>
     </Card>
   )

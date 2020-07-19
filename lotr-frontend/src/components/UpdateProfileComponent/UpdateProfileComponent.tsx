@@ -1,18 +1,25 @@
 import React, { FunctionComponent, SyntheticEvent, useState } from "react";
-import { Button, TextField, withStyles, makeStyles, Container, CssBaseline, Typography, Grid } from "@material-ui/core";
-import { lotrSignUp } from "../../lotr-api/lotr-sign-up";
+import { Button, TextField, makeStyles, Container, CssBaseline, Typography, Grid } from "@material-ui/core";
+import { lotrUpdateUser } from "../../lotr-api/lotr-update-user";
 import { User } from "../../models/User";
-import { RouteComponentProps } from "react-router";
-import { Link } from 'react-router-dom';
+import { Link, useParams, RouteComponentProps } from 'react-router-dom';
 import { green } from "@material-ui/core/colors";
 import {toast} from 'react-toastify'
 
 interface ISignInProps extends RouteComponentProps{
-    changeCurrentUser:(newUser:any)=>void
+     user:User
 }
 
-export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
+export const UpdateProfileComponent:FunctionComponent<any> = (props) =>{
     const classes = useStyles();
+
+    let currentUserId = props.user.userId
+
+    // let getUser = async (userId:number)=>{
+    //     //we await user info and then call a state updat function with it
+    //     let user = await lotrGetUserById(userId)
+    //     return user
+    // }
 
     let [username, changeUsername] = useState("") 
     let [password, changePassword] = useState("")
@@ -24,29 +31,49 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
 
     const updateUsername = (e:any) => {
         e.preventDefault()
-        changeUsername(e.currentTarget.value)
+        if (e.currentTarget.value !== undefined){
+            changeUsername(e.currentTarget.value)
+        } else {
+            changeUsername(props.user.username)
+        }
     }
     const updatePassword = (e:any) => {
         e.preventDefault()
-        changePassword(e.currentTarget.value)
+        if (e.currentTarget.value !== undefined){
+            changePassword(e.currentTarget.value)
+        } else {
+            changePassword(props.user.password)
+        }
     }
     const updateConfirmPassword = (e:any) => {
         e.preventDefault()
-        changeConfirmPassword(e.currentTarget.value)
+        if (e.currentTarget.value !== undefined){
+            changeConfirmPassword(e.currentTarget.value)
+        } else {
+            changeConfirmPassword(props.user.password)
+        }
     }
     const updateFirstName = (e:any) => {
         e.preventDefault()
-        changeFirstName(e.currentTarget.value)
+        if (e.currentTarget.value !== ''){
+            changeFirstName(e.currentTarget.value)
+        } 
     }
     const updateLastName = (e:any) => {
         e.preventDefault()
-        changeLastName(e.currentTarget.value)
+        if (e.currentTarget.value !== ''){
+            changeLastName(e.currentTarget.value)
+        } 
     } 
     const updateEmail = (e:any) => {
         e.preventDefault()
-        changeEmail(e.currentTarget.value)
+        if (e.currentTarget.value !== ''){
+            changeEmail(e.currentTarget.value)
+        } 
     }
     const updateImage = (e:any) => {
+        //e.preventDefault()
+
         //type file has array called files, since you could upload multiple. Thus we speficy we want only want the first 
         let file:File = e.currentTarget.files[0]
         //utlize FileReader - the old way of doing it without promises
@@ -60,25 +87,22 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
         }
     }
 
-
-    const submitUser = async (e:SyntheticEvent) => {
+    const updateUser = async (e:SyntheticEvent) => {
         e.preventDefault() // always have to prevent default of refreshing the page
         if(password !== confirmPassword){
             toast.error('Passwords Do Not Match!')
         } else {
-            let newUser: User = { //assign values to new user
-                userId: 0,
+            let updatedUser: User = { //assign values to new user
+                userId: currentUserId,
                 username,
                 password,
                 firstName,
                 lastName,
                 email,
-                role: "Member", //firgure out role table! There has to be a better way of doing this
+                role: "Member",
                 image //need to add to models and user router!!!
             }
-            //need backend set up for this
-            let res = await lotrSignUp(newUser) //make sure endpoint returns new user
-            props.changeCurrentUser(res) //change current user
+            let res = await lotrUpdateUser(updatedUser) //make sure endpoint returns new user
             props.history.push(`/profile/${res.userId}`) //send too profile page (or elsewhere?)
         }
     }
@@ -88,18 +112,17 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
         <CssBaseline />
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
-            Register
+            Update User Profile
           </Typography>
-          <form autoComplete="off" onSubmit={submitUser} className={classes.form} noValidate>
+          <form autoComplete="off" onSubmit={updateUser} className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   margin="normal"
-                  required
                   fullWidth
                   id="username"
-                  label="Username"
+                  label="New Username"
                   name="username"
                   value={username}
                   onChange={updateUsername}
@@ -109,10 +132,9 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
                 <TextField
                   variant="outlined"
                   margin="normal"
-                  required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="New Password"
                   type="password"
                   id="password"
                   value={password}
@@ -123,10 +145,9 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
                 <TextField
                   variant="outlined"
                   margin="normal"
-                  required
                   fullWidth
                   name="confirm-password"
-                  label="Confirm Password"
+                  label="Confirm New Password"
                   type="password"
                   id="confirm-password"
                   value={confirmPassword}
@@ -138,7 +159,7 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
                   variant="outlined"
                   fullWidth
                   id="email"
-                  label="Email"
+                  label="Change Email"
                   name="email"
                   value={email}
                   onChange={updateEmail}
@@ -149,7 +170,7 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
                   variant="outlined"
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Change First Name"
                   name="firstName"
                   value={firstName}
                   onChange={updateFirstName}
@@ -160,14 +181,14 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
                   variant="outlined"
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label="Change Last Name"
                   name="lastName"
                   value={lastName}
                   onChange={updateLastName}
                 />
               </Grid>
               <Grid item xs={12}>
-                <label htmlFor="file">Profile Picture</label> <br/>
+                <label htmlFor="file">Change Profile Picture</label> <br/>
                 <input type="file" name="file" accept="image/*" onChange={updateImage} />
                 <img src={image} width="100%"/>
               </Grid>
@@ -178,7 +199,7 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
                   variant="contained"
                   color="primary"
                   className={classes.submit}
-                > Register
+                > Update
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6}>
