@@ -12,11 +12,12 @@ const useStyles = makeStyles({ //customize this more!
     maxWidth:500
   },
   username: {
-    variant: "h1",
+    fontSize: 20,
+    fontFamily: "Bookman Old Style"
   },
   userInfo: {
-    fontSize: 12,
-    color: "textSecondary"
+    color: "textSecondary",
+    fontFamily: "Bookman Old Style"
   },
 });
 
@@ -29,13 +30,13 @@ export const UserDisplayComponent: FunctionComponent<IUserDisplayProps> = (props
           <Typography className={classes.username} gutterBottom>
             Username : {props.user.username}
           </Typography>
-          <Typography className={classes.userInfo} gutterBottom>
+          <Typography className={classes.userInfo}>
             Password : {props.user.password}
           </Typography>
           <Typography className={classes.userInfo}>
               First Name : {props.user.firstName}
           </Typography>
-          <Typography className={classes.userInfo} gutterBottom>
+          <Typography className={classes.userInfo}>
               Last Name : {props.user.lastName}
           </Typography>
           <Typography className={classes.userInfo}>

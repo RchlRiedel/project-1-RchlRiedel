@@ -25,8 +25,8 @@ function App() {
         <Route path='/home' component={HomeComponent}/>
         {/*Figure out how to make this the start up screen */}
         <Route path='/login' render={(props)=>(<LoginComponent changeCurrentUser={changeCurrentUser} {...props} />)} />
-        <Route path='/profile/:userId' component={ProfileComponent}/>
-        <Route path='/profile/update/:userId' render={(props)=>(<UpdateProfileComponent user={currentUser} {...props}/>)}/>
+        <Route path='/user/profile/:userId' component={ProfileComponent}/>
+        <Route path='/user/update/:userId' render={(props)=>(<UpdateProfileComponent user={currentUser} {...props}/>)}/>
         <Route path='/register' render={(props)=>(<SignUpComponent changeCurrentUser={changeCurrentUser} {...props} />)}/>
         <Route path='/logout' component={LogOutComponent}/>
         <br/>

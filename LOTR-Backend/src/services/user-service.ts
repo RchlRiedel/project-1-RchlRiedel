@@ -2,7 +2,7 @@ import { User } from "../models/User";
 import { saveProfilePicture } from "../daos/Cloud-Storage/user-images";
 import { bucketBaseUrl } from "../daos/Cloud-Storage";
 import { expressEventEmitter, customExpressEvents } from "../event-listeners";
-import { getAllUsers, findUsersById, saveNewUser } from "../daos/SQL/users-dao";
+import { getAllUsers, findUsersById, saveNewUser, getUserByUsernameAndPassword, updateUser } from "../daos/SQL/users-dao";
 
 //the most basic service function you will see
 //all it does is call the dao
@@ -11,11 +11,13 @@ export async function getAllUsersService(): Promise<User[]> {
     return await getAllUsers()
 }
 
-
 export async function getUserByIDService(id: number): Promise<User> {
     return await findUsersById(id)
 }
 
+export async function getUserByUserNameAndPasswordService(username:string, password:string):Promise<User>{
+    return await getUserByUsernameAndPassword(username, password)
+}
 export async function saveOneUserService(newUser: User): Promise<User> {
     //two major process to manage in this function
     try {
@@ -43,10 +45,27 @@ export async function saveOneUserService(newUser: User): Promise<User> {
         console.log(e)
         throw e
     }
-
     //if we can't save the user in the db, don't save the picture
     //if we do save the user and the picture save fails - pretend that nothing happened ( you should probably update the user to set the image to null)
+}
+export async function updateUserService(updatedUser: User): Promise<User>{
+    try {
+        //essentially the above, but we are switching the dao fucntion and the input
+        let base64Image = updatedUser.image
+        let [dataType, imageBase64Data] = base64Image.split(';base64,')
+        let contentType = dataType.split('/').pop()
 
-
-
+        if (updatedUser.image) {
+            updatedUser.image = `${bucketBaseUrl}/users/${updatedUser.username}/profile.${contentType}`
+        }
+        let savedUser = await updateUser(updatedUser)
+       
+        await saveProfilePicture(contentType, imageBase64Data, `users/${updatedUser.username}/profile.${contentType}`)
+        
+        expressEventEmitter.emit(customExpressEvents.NEW_USER, updatedUser)
+        return savedUser
+    } catch (e) {
+        console.log(e)
+        throw e
+    }   
 }

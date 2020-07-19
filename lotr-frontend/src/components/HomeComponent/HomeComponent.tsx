@@ -1,16 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import { withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { purple } from '@material-ui/core/colors';
+import { green, lime } from '@material-ui/core/colors';
 import { Card, CardContent, Typography, CardActions } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 const SignUpButton = withStyles((theme) => ({
   root: {
-    color: theme.palette.getContrastText(purple[500]),
-    backgroundColor: purple[500],
+    color: theme.palette.getContrastText(lime[700]),
+    backgroundColor: "lime[700]",
     '&:hover': {
-      backgroundColor: purple[700],
+      backgroundColor: green[900],
     },
   },
 }))(Button);
@@ -19,14 +19,18 @@ const useStyles = makeStyles((theme) => ({
   root: { //figure out spacing for this (so it's relative to screen size and centered)
     margin: "auto",
     maxWidth: 600,
-    justifyContent: "center"
+    justifyContent: "center",
+  },
+  text: {
+    fontFamily:"Bookman Old Style",
+    color:"black"
   },
   submit: {
     margin: theme.spacing(1),
-    backgroundColor: 'green',
+    backgroundColor: lime[700],
     color: 'white',
     //background color? for when hovering/submitting?
-    //fontFamily: '',
+    fontFamily: "Bookman Old Style",
     fontSize: 16,
   }
 }));
@@ -39,10 +43,10 @@ export const HomeComponent:FunctionComponent<any> = (props) =>{
         {/* <CardMedia  /> 
         Insert image of middle earth here! (or slideshow?)*/}
         <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography gutterBottom variant="h5" component="h2" className={classes.text}>
                 Become part of an expedition to save the world!                 
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography variant="body1" component="p" className={classes.text}>
                 Join the Fellowship of the Ring, a selective, diverse 
                 team working to overthrow the Dark Lord as they travel across 
                 the legendary, luscious landscape of Middle-Earth to 
@@ -53,9 +57,9 @@ export const HomeComponent:FunctionComponent<any> = (props) =>{
         <CardActions className={classes.root}>
           {/*EDIT THE LINKS IN THE BUTTONS */}
             <Link to= "/register" style={{ textDecoration:"none"}}><SignUpButton variant="contained" className={classes.submit}>
-              Sign Up Now!
+              Register Now!
             </SignUpButton></Link>  
-             or  <Link to="/login">Login</Link>
+             or  <Link to="/login" className={classes.text}>Login</Link>
         </CardActions>
     </Card>
   )

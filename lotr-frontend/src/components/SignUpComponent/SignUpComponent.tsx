@@ -4,7 +4,7 @@ import { lotrSignUp } from "../../lotr-api/lotr-sign-up";
 import { User } from "../../models/User";
 import { RouteComponentProps } from "react-router";
 import { Link } from 'react-router-dom';
-import { green } from "@material-ui/core/colors";
+import { green, lime } from "@material-ui/core/colors";
 import {toast} from 'react-toastify'
 
 interface ISignInProps extends RouteComponentProps{
@@ -79,7 +79,7 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
             //need backend set up for this
             let res = await lotrSignUp(newUser) //make sure endpoint returns new user
             props.changeCurrentUser(res) //change current user
-            props.history.push(`/profile/${res.userId}`) //send too profile page (or elsewhere?)
+            props.history.push(`/user/profile/${res.userId}`) //send too profile page (or elsewhere?)
         }
     }
 
@@ -172,25 +172,25 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
                 <img src={image} width="100%"/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Button
+                <CustomButton
                   type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
                   className={classes.submit}
                 > Register
-                </Button>
+                </CustomButton>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Link to= "/home" style={{ textDecoration:"none"}}>
-                <Button
+                <CustomButton
                   type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
                   className={classes.submit}
                 > Cancel 
-                </Button>
+                </CustomButton>
                 </Link>
               </Grid>
             </Grid>            
@@ -199,6 +199,16 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
       </Container>
     )
 }
+
+const CustomButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(lime[700]),
+    backgroundColor: "lime[700]",
+    '&:hover': {
+      backgroundColor: green[900],
+    },
+  },
+}))(Button);
 
 //styles at the bottom because closer to html return
 const useStyles = makeStyles((theme) => ({
@@ -218,11 +228,11 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      backgroundColor: 'green',
+      backgroundColor: lime[700],
       color: 'white',
       //background color?
-      //fontFamily: '',
-      fontSize: 16,
+      fontFamily: "Bookman Old Style",
+      fontSize: 16
     },
     media: {
 

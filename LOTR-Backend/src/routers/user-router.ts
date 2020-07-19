@@ -2,19 +2,20 @@
 import express, { Request, Response, NextFunction } from 'express'
 import { authentificationMiddleware } from '../middleware/authentification-middleware'
 import { authorizationMiddleware } from '../middleware/authorization-middleware'
-import { getAllUsers, updateUser, findUsersById } from '../daos/SQL/users-dao'
+import { updateUser } from '../daos/SQL/users-dao'
 import { User } from '../models/User'
 import { UserIdNumberNeededError } from '../errors/User-Id-Number-Needed-Error'
+import { getAllUsersService, getUserByIDService } from '../services/user-service'
 
 export const userRouter = express.Router()
 
 //Use login
 userRouter.use(authentificationMiddleware)
 
-//Find Users                                 Get rid of this Finance manager role!
+//Find Users                                 
 userRouter.get("/", authorizationMiddleware(["Admin"], false), async (req:Request, res:Response, next:NextFunction)=>{
     try {
-        let allUsers = await getAllUsers() 
+        let allUsers = await getAllUsersService() 
         res.json(allUsers)
     } catch(e){
         next(e)
@@ -37,14 +38,13 @@ userRouter.get("/:userId",  authorizationMiddleware(["Admin"], true), async (req
         next(new UserIdNumberNeededError)
     } else {
         try {
-            let user = await findUsersById(+userId)
+            let user = await getUserByIDService(+userId)
             res.json(user)
         } catch(e) {
             next(e)
         }
     }
 })
-
 
 //Update user
 userRouter.patch("/update", async (req:Request, res: Response, next:NextFunction) => {

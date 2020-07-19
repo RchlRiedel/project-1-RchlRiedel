@@ -1,8 +1,10 @@
 import React, { FunctionComponent, useState, SyntheticEvent } from "react"
 import { lotrLogin } from "../../lotr-api/lotr-login"
 import { RouteComponentProps } from "react-router"
-import {TextField, Button, makeStyles, Container, CssBaseline, Typography, Grid} from "@material-ui/core"
+import {TextField, Button, makeStyles, Container, CssBaseline, Typography, Grid, withStyles} from "@material-ui/core"
 import { Link } from "react-router-dom"
+import { green, lime } from "@material-ui/core/colors"
+import { toast } from "react-toastify"
 
 interface ILoginProps extends RouteComponentProps{
     changeCurrentUser:(newUser:any)=>void
@@ -32,10 +34,11 @@ export const LoginComponent:FunctionComponent<ILoginProps> = (props) => {
         console.log(res)
         
         if (!res.userId){
-            props.history.push(`/home`) 
+            toast.error('Invalid Credentials! Please try again.')
+            props.history.push(`/login`) 
         } else {
             props.changeCurrentUser(res) 
-            props.history.push(`/profile/${res.userId}`) 
+            props.history.push(`/user/profile/${res.userId}`) 
         }
     }
 
@@ -44,7 +47,7 @@ export const LoginComponent:FunctionComponent<ILoginProps> = (props) => {
         <CssBaseline />
         <div className={classes.paper}>
             <Typography component="h1" variant="h5">
-            Register
+            Login
             </Typography>
             <form autoComplete="off" onSubmit={loginSubmit} className={classes.form} noValidate>
             <Grid container spacing={2}>
@@ -87,14 +90,14 @@ export const LoginComponent:FunctionComponent<ILoginProps> = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                 <Link to= "/home" style={{ textDecoration:"none"}}>
-                <Button
+                <CustomButton
                     type="submit"
                     fullWidth
                     variant="contained"
                     color="primary"
                     className={classes.submit}
                 > Cancel 
-                </Button>
+                </CustomButton>
                 </Link>
                 </Grid>
             </Grid>            
@@ -104,6 +107,17 @@ export const LoginComponent:FunctionComponent<ILoginProps> = (props) => {
         )
     }
     
+    
+const CustomButton = withStyles((theme) => ({
+    root: {
+        color: theme.palette.getContrastText(lime[700]),
+        backgroundColor: "lime[700]",
+        '&:hover': {
+          backgroundColor: green[900],
+        },
+    },
+  }))(Button);
+  
 //styles at the bottom because closer to html return
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -122,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
-        backgroundColor: 'green',
+        backgroundColor: lime[700],
         color: 'white',
         //background color?
         //fontFamily: '',

@@ -1,9 +1,9 @@
 import React, { FunctionComponent, SyntheticEvent, useState } from "react";
-import { Button, TextField, makeStyles, Container, CssBaseline, Typography, Grid } from "@material-ui/core";
+import { Button, TextField, makeStyles, Container, CssBaseline, Typography, Grid, withStyles } from "@material-ui/core";
 import { lotrUpdateUser } from "../../lotr-api/lotr-update-user";
 import { User } from "../../models/User";
 import { Link, useParams, RouteComponentProps } from 'react-router-dom';
-import { green } from "@material-ui/core/colors";
+import { green, lime } from "@material-ui/core/colors";
 import {toast} from 'react-toastify'
 
 interface ISignInProps extends RouteComponentProps{
@@ -103,7 +103,7 @@ export const UpdateProfileComponent:FunctionComponent<any> = (props) =>{
                 image //need to add to models and user router!!!
             }
             let res = await lotrUpdateUser(updatedUser) //make sure endpoint returns new user
-            props.history.push(`/profile/${res.userId}`) //send too profile page (or elsewhere?)
+            props.history.push(`/user/profile/${res.userId}`) //send too profile page (or elsewhere?)
         }
     }
 
@@ -193,25 +193,25 @@ export const UpdateProfileComponent:FunctionComponent<any> = (props) =>{
                 <img src={image} width="100%"/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Button
+                <CustomButton
                   type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
                   className={classes.submit}
                 > Update
-                </Button>
+                </CustomButton>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Link to= "/home" style={{ textDecoration:"none"}}>
-                <Button
+                <CustomButton
                   type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
                   className={classes.submit}
                 > Cancel 
-                </Button>
+                </CustomButton>
                 </Link>
               </Grid>
             </Grid>            
@@ -220,6 +220,15 @@ export const UpdateProfileComponent:FunctionComponent<any> = (props) =>{
       </Container>
     )
 }
+const CustomButton = withStyles((theme) => ({
+  root: {
+      color: theme.palette.getContrastText(lime[700]),
+      backgroundColor: "lime[700]",
+      '&:hover': {
+        backgroundColor: green[900],
+      },
+  },
+}))(Button);
 
 //styles at the bottom because closer to html return
 const useStyles = makeStyles((theme) => ({
@@ -239,11 +248,11 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      backgroundColor: 'green',
+      backgroundColor: lime[700],
       color: 'white',
       //background color?
-      //fontFamily: '',
-      fontSize: 16,
+      fontFamily: "Bookman Old Style",
+      fontSize: 16
     },
     media: {
 
