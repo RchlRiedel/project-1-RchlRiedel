@@ -11,6 +11,6 @@ export const lotrLogin = async (username: String, password: String) =>{
         return response.data //user?
     } catch (e) {
         console.log(e)
-        return ("This is an error")
+        throw e
     }
 }

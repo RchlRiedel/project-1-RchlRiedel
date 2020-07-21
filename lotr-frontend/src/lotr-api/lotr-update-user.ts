@@ -10,6 +10,6 @@ export const lotrUpdateUser = async (user:User) => {
         return response.data
     } catch(e){
         console.log(e);
-        //insert error
+        throw e
     }
 }

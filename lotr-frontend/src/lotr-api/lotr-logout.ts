@@ -7,6 +7,6 @@ export const lotrLogOut = async () =>{
         return response.data //should be null?
     } catch (e) {
         console.log(e)
-        return ("This is an error")
+        throw e
     }
 }

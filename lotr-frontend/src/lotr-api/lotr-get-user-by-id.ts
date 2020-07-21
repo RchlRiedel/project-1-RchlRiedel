@@ -6,7 +6,6 @@ export const lotrGetUserById = async (userId:number) =>{
         return response.data
     } catch(e) {
         console.log(e);
-        console.log("We should probably handle this");
-        
+        throw e
     }
 }

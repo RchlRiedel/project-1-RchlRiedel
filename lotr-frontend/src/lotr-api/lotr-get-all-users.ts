@@ -6,6 +6,6 @@ export const lotrGetAllUsers = async () => {
         return response.data 
     } catch(e) {
         console.log(e);
-        //put in an error        
+        throw e
     }
 }

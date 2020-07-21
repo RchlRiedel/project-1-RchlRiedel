@@ -10,6 +10,6 @@ export const lotrSignUp = async (user:User) => {
         return response.data
     } catch(e){
         console.log(e);
-        //insert error
+        throw e
     }
 }
