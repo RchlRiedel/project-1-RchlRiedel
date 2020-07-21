@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { User } from '../../models/User'
-import { makeStyles, Typography, CardContent, Card } from "@material-ui/core"
+import { makeStyles, Typography, CardContent, Card, CardMedia } from "@material-ui/core"
 
 interface IUserDisplayProps {
     user:User
@@ -10,6 +10,12 @@ const useStyles = makeStyles({ //customize this more!
     margin: "auto",
     minWidth: 275,
     maxWidth:500
+  },
+  media: {
+    maxHeight: 300,
+    height:"100%",
+    width: "auto",
+    margin: "auto"
   },
   username: {
     fontSize: 20,
@@ -26,7 +32,12 @@ export const UserDisplayComponent: FunctionComponent<IUserDisplayProps> = (props
     return (
       <Card className={classes.root} >
         <CardContent>
-          {/*insert photo media element */}
+        <CardMedia
+          component = "img"
+          className={classes.media}
+          alt="Profile Picture"
+          image={props.user.image} 
+        />
           <Typography className={classes.username} gutterBottom>
             Username : {props.user.username}
           </Typography>
@@ -41,6 +52,9 @@ export const UserDisplayComponent: FunctionComponent<IUserDisplayProps> = (props
           </Typography>
           <Typography className={classes.userInfo}>
               Email : {props.user.email}
+          </Typography>
+          <Typography className={classes.userInfo}>
+              Role : {props.user.role}
           </Typography>
         </CardContent>
         {/* <CardActions>

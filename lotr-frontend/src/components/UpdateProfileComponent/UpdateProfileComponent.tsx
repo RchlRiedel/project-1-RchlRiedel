@@ -6,20 +6,14 @@ import { Link, useParams, RouteComponentProps } from 'react-router-dom';
 import { green, lime } from "@material-ui/core/colors";
 import {toast} from 'react-toastify'
 
-interface ISignInProps extends RouteComponentProps{
-     user:User
-}
+// interface ISignInProps extends RouteComponentProps{
+//      user:User
+// } //check if this even works
 
 export const UpdateProfileComponent:FunctionComponent<any> = (props) =>{
     const classes = useStyles();
 
     let currentUserId = props.user.userId
-
-    // let getUser = async (userId:number)=>{
-    //     //we await user info and then call a state updat function with it
-    //     let user = await lotrGetUserById(userId)
-    //     return user
-    // }
 
     let [username, changeUsername] = useState("") 
     let [password, changePassword] = useState("")
@@ -72,8 +66,7 @@ export const UpdateProfileComponent:FunctionComponent<any> = (props) =>{
         } 
     }
     const updateImage = (e:any) => {
-        //e.preventDefault()
-
+        e.preventDefault()
         //type file has array called files, since you could upload multiple. Thus we speficy we want only want the first 
         let file:File = e.currentTarget.files[0]
         //utlize FileReader - the old way of doing it without promises

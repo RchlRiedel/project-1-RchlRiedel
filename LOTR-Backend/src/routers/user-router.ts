@@ -2,10 +2,9 @@
 import express, { Request, Response, NextFunction } from 'express'
 import { authentificationMiddleware } from '../middleware/authentification-middleware'
 import { authorizationMiddleware } from '../middleware/authorization-middleware'
-import { updateUser } from '../daos/SQL/users-dao'
 import { User } from '../models/User'
 import { UserIdNumberNeededError } from '../errors/User-Id-Number-Needed-Error'
-import { getAllUsersService, getUserByIDService } from '../services/user-service'
+import { getAllUsersService, getUserByIDService, updateUserService } from '../services/user-service'
 
 export const userRouter = express.Router()
 
@@ -72,7 +71,7 @@ userRouter.patch("/update", async (req:Request, res: Response, next:NextFunction
         updatedUser.image = image || undefined
 
         try {
-            let updatedUserResults = await updateUser(updatedUser)
+            let updatedUserResults = await updateUserService(updatedUser)
             res.json(updatedUserResults)
         } catch (e) {
             next

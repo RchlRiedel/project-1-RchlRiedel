@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import './App.css';
-import { LoginComponent } from './components/LoginComponent/LoginComponent'
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from 'react-toastify'
 import {BrowserRouter as Router, Route} from "react-router-dom" //just changed name of router
+
 import { User } from './models/User';
+
+import { LoginComponent } from './components/LoginComponent/LoginComponent'
 import { NavBarComponent } from './components/NavBarComponent/NavBarComponent';
 import { ProfileComponent } from './components/ProfileComponent/ProfileComponent';
 import { HomeComponent } from './components/HomeComponent/HomeComponent'
 import { SignUpComponent } from './components/SignUpComponent/SignUpComponent';
 import { UpdateProfileComponent } from './components/UpdateProfileComponent/UpdateProfileComponent';
-//import { LogoutComponent } from './components/LogoutComponent/LogoutComponent';
-//import { AllUsersComponent } from './components/AllUsersComponent/AllUsersComponent';
-import {ToastContainer} from 'react-toastify'
 import { LogOutComponent } from './components/LogOutComponent/LogOutComponent';
+//import { AllUsersComponent } from './components/AllUsersComponent/AllUsersComponent';
 
 
 function App() {

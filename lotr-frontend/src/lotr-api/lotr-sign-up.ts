@@ -5,7 +5,7 @@ export const lotrSignUp = async (user:User) => {
     
     try{
         console.log(user)
-        let response = await lotrClient.post('/register', user) //for the registration endpoint -- may be problematic (as to what we are passing in)
+        let response = await lotrClient.post('/register', user) //for the registration endpoint 
         console.log(response);
         return response.data
     } catch(e){

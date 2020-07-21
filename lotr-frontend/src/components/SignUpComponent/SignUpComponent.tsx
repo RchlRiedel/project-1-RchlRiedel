@@ -47,6 +47,7 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
         changeEmail(e.currentTarget.value)
     }
     const updateImage = (e:any) => {
+        e.preventDefault() //do I need this?
         //type file has array called files, since you could upload multiple. Thus we speficy we want only want the first 
         let file:File = e.currentTarget.files[0]
         //utlize FileReader - the old way of doing it without promises
@@ -56,10 +57,9 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
         //set a callback for when it's done reading
         reader.onload = () =>{
             console.log(reader.result); //to see binary representation of the image
-            changeImage(reader.result) 
+            changeImage(reader.result)
         }
     }
-
 
     const submitUser = async (e:SyntheticEvent) => {
         e.preventDefault() // always have to prevent default of refreshing the page
@@ -73,11 +73,10 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
                 firstName,
                 lastName,
                 email,
-                role: "Member", //firgure out role table! There has to be a better way of doing this
+                role: "Member", //changed roles to just be strings
                 image //need to add to models and user router!!!
             }
-            //need backend set up for this
-            let res = await lotrSignUp(newUser) //make sure endpoint returns new user
+            let res = await lotrSignUp(newUser) //return a new user
             props.changeCurrentUser(res) //change current user
             props.history.push(`/user/profile/${res.userId}`) //send too profile page (or elsewhere?)
         }
