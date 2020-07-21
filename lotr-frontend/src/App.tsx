@@ -12,8 +12,8 @@ import { ProfileComponent } from './components/ProfileComponent/ProfileComponent
 import { HomeComponent } from './components/HomeComponent/HomeComponent'
 import { SignUpComponent } from './components/SignUpComponent/SignUpComponent';
 import { UpdateProfileComponent } from './components/UpdateProfileComponent/UpdateProfileComponent';
-
 import { LogOutComponent } from './components/LogOutComponent/LogOutComponent';
+
 //import { AllUsersComponent } from './components/AllUsersComponent/AllUsersComponent';
 
 

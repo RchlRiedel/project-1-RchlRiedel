@@ -15,7 +15,7 @@ export const LoginComponent:FunctionComponent<ILoginProps> = (props) => {
 
     //we need to keep track of a username and a password... 
     //(user was moved to App.tsx when we added the interface)
-    const [username, changeUsername] = useState("") 
+    const [username, changeUsername] = useState("")
     const [password, changePassword] = useState("")
 
     const updatePassword = (event:any) => { 
