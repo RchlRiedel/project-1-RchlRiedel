@@ -5,7 +5,7 @@ export const lotrUpdateUser = async (user:User) => {
     
     try{
         console.log(user)
-        let response = await lotrClient.patch('/users/update', user) //for the update endpoint
+        let response = await lotrClient.patch(`/users/update/${user.userId}`, user) //for the update endpoint
         console.log(response);
         return response.data
     } catch(e){

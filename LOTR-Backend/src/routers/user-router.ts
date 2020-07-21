@@ -46,29 +46,28 @@ userRouter.get("/:userId",  authorizationMiddleware(["Admin"], true), async (req
 })
 
 //Update user
-userRouter.patch("/update", async (req:Request, res: Response, next:NextFunction) => {
-    let {userId, username, password, firstName, lastName, email, role, image } = req.body
-
-    if (!userId || isNaN(req.body.userId)){
+userRouter.patch("/update/:userId", async (req:Request, res: Response, next:NextFunction) => {
+    let {userId} = req.params
+    let {username, password, firstName, lastName, email, image } = req.body
+    let currentUserId = +userId
+    if (!currentUserId || isNaN(+currentUserId)){
         next (new UserIdNumberNeededError)
     } else { 
         let updatedUser:User = {
-            userId,
+            userId: currentUserId,
             username,
             password,
             firstName,
             lastName,
             email,
-            role,
-            image
+            role: "Member",
+            image 
         }
         updatedUser.username = username || undefined
         updatedUser.password = password || undefined
         updatedUser.firstName = firstName || undefined
         updatedUser.lastName = lastName || undefined
         updatedUser.email = email || undefined
-        updatedUser.role = role || undefined
-        updatedUser.image = image || undefined
 
         try {
             let updatedUserResults = await updateUserService(updatedUser)

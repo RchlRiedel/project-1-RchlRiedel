@@ -2,17 +2,19 @@ set schema 'project_1';
 
 truncate users cascade;
 
-insert into users ("username", "password", "first_name", "last_name", "email", "role")
-	values 	('Mithrandir', 'YouShallNotPass', 'Gandalf', 'the Grey', 'shadofaxTheFast@email.com', 'Admin'),
-			('RingBearer', 'MyPrecious', 'Frodo', 'Baggins', 'frodoUnderhill@email.com', 'User'),
-			('SamIAm', 'password', 'Samwise', 'Gamgee', 'potatoes4life@email.com', 'User'),
-		 	('MerryMerry', 'BrandybuckBoi', 'Meriadoc', 'Brandybuck', 'tallerThanPippin@email.com', 'User'),
-		 	('FoolOfATook', '00psMyBad', 'Peregrin', 'Took', 'tallerThanMerry@email.com', 'User'),
-		 	('Strider', 'Actually87', 'Aragron II', 'Elessar Telcontar', 'Heir2Isildur@email.com', 'User'),
-		 	('LorealLegolas', 'BecauseYouAreWorthIt', 'Legolas', 'Greenleaf', 'EndlessQuiver@email.com', 'User'),
-		 	('GoldenGimli', 'ThatStillOnlyCountsAs1', 'Gimli', 'Son of Gloin', 'lockbearer@email.com', 'User'),
-		 	('CaptainoftheWhiteTower', 'NearamirFaramir', 'Boromir', 'Son of Denethor', 'sterwardPrince@email.com', 'User');
---we'll want to get rid of some of this data so that I can demo adding a user
+insert into users ("username", "password", "first_name", "last_name", "email", "role", "image")
+	values 	('Mithrandir', 'YouShallNotPass', 'Gandalf', 'the Grey', 'shadofaxTheFast@email.com', 'Admin', 'https://storage.googleapis.com/project-1-rchlriedel-bucket/LOTR_Profiles/Mithrandir.jpeg'),
+			('RingBearer', 'MyPrecious', 'Frodo', 'Baggins', 'frodoUnderhill@email.com', 'Member', null),
+			('SamIAm', 'password', 'Samwise', 'Gamgee', 'potatoes4life@email.com', 'Member', 'https://storage.googleapis.com/project-1-rchlriedel-bucket/LOTR_Profiles/Mithrandir.jpeg'),
+		 	('MerryMerry', 'BrandybuckBoi', 'Meriadoc', 'Brandybuck', 'tallerThanPippin@email.com', 'Member', null),
+		 	('FoolOfATook', '00psMyBad', 'Peregrin', 'Took', 'tallerThanMerry@email.com', 'Member', null),
+		 	('Strider', 'Actually87', 'Aragron II', 'Elessar Telcontar', 'Heir2Isildur@email.com', 'Member', null);
+		 
+		 
+--		 	('LorealLegolas', 'BecauseYouAreWorthIt', 'Legolas', 'Greenleaf', 'EndlessQuiver@email.com', 'Member'),
+--		 	('GoldenGimli', 'ThatStillOnlyCountsAs1', 'Gimli', 'Son of Gloin', 'lockbearer@email.com', 'Member'),
+--		 	('CaptainoftheWhiteTower', 'NearamirFaramir', 'Boromir', 'Son of Denethor', 'sterwardPrince@email.com', 'Member');
+--data to use in demos
 
 		 
 --Testing queries used in backend:
@@ -31,5 +33,8 @@ insert into users ("username", "password", "first_name", "last_name", "email", "
 		 
 select * from users;
 
-delete from users where user_id=12;
+select image from users;
+
+
+--delete from users where user_id=10;
 

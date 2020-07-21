@@ -30,7 +30,7 @@ function App() {
         <Route path='/user/profile/:userId' component={ProfileComponent}/>
         <Route path='/user/update/:userId' render={(props)=>(<UpdateProfileComponent user={currentUser} {...props}/>)}/>
         <Route path='/register' render={(props)=>(<SignUpComponent changeCurrentUser={changeCurrentUser} {...props} />)}/>
-        <Route path='/logout' component={LogOutComponent}/>
+        <Route path='/logout' render={(props)=>(<LogOutComponent changeCurrentUser={changeCurrentUser} {...props}/>)}/>
         <br/>
       </Router>
       <ToastContainer position="bottom-right"/>

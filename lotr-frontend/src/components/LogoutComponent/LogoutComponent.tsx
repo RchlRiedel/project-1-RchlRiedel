@@ -15,6 +15,7 @@ export const LogOutComponent: FunctionComponent<ILogoutProps> = (props)=>{
 
         let res = await lotrLogOut()
         console.log(res)
+        props.changeCurrentUser(res)
         props.history.push(`/home`)
     } 
 

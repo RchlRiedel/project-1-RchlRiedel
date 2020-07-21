@@ -38,7 +38,7 @@ export const NavBarComponent:FunctionComponent<any> = (props) => {
   };
 
   let menuItems = []
-//new thing!!! Test!!!!
+  //changes the nav bar back after logout for when the there is no currenUser
   useEffect(()=>{
       if (props.user === null){
         menuItems = []
@@ -49,23 +49,22 @@ export const NavBarComponent:FunctionComponent<any> = (props) => {
       }
   })
 
-  {/*EDIT THE LINKS TO LOOK NICE */}
-  menuItems.push(<Link to= "/home" style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Home</MenuItem></Link>)
-  
-
-  if(props.user){ //want this to switch back when logged off
+  if (props.user) {
     menuItems.push(
-        <Link to={`/user/profile/${(props.user)?props.user.userId : '0' }`} style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>User Profile</MenuItem></Link>,
-        <Link to ={`/user/update/${(props.user)?props.user.userId : '0' }`} style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Edit Account Details</MenuItem></Link>,
-        <Link to="/logout" style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Logout</MenuItem></Link>)
-        //info page?    
+      <Link to= "/home" style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Home</MenuItem></Link>,
+      <Link to={`/user/profile/${(props.user)?props.user.userId : '0' }`} style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>User Profile</MenuItem></Link>,
+      <Link to ={`/user/update/${(props.user)?props.user.userId : '0' }`} style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Edit Account Details</MenuItem></Link>,
+      <Link to="/logout" style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Logout</MenuItem></Link>)
+      //info page? 
   } else {
     menuItems.push(
+      <Link to= "/home" style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Home</MenuItem></Link>,
       <Link to= "/login" style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Login</MenuItem></Link>,
       <Link to= "/register" style={{ textDecoration:"none"}}><MenuItem onClick={handleClose}>Sign Up</MenuItem></Link>
-  )
+    )
   }
-//    if(props.user && props.user.role === 'Admin'){ for get all users (if posssible)
+//    if(props.user && props.user.role === 'Admin'){ for get all users (for later)
+
     return (
       <nav>
         <AppBar position="static" className={classes.root}>

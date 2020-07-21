@@ -13,7 +13,7 @@ import {toast} from 'react-toastify'
 export const UpdateProfileComponent:FunctionComponent<any> = (props) =>{
     const classes = useStyles();
 
-    let currentUserId = props.user.userId
+    let {userId} = useParams()
 
     let [username, changeUsername] = useState("") 
     let [password, changePassword] = useState("")
@@ -25,27 +25,15 @@ export const UpdateProfileComponent:FunctionComponent<any> = (props) =>{
 
     const updateUsername = (e:any) => {
         e.preventDefault()
-        if (e.currentTarget.value !== undefined){
-            changeUsername(e.currentTarget.value)
-        } else {
-            changeUsername(props.user.username)
-        }
+        changeUsername(e.currentTarget.value)
     }
     const updatePassword = (e:any) => {
         e.preventDefault()
-        if (e.currentTarget.value !== undefined){
-            changePassword(e.currentTarget.value)
-        } else {
-            changePassword(props.user.password)
-        }
+        changePassword(e.currentTarget.value)
     }
     const updateConfirmPassword = (e:any) => {
         e.preventDefault()
-        if (e.currentTarget.value !== undefined){
-            changeConfirmPassword(e.currentTarget.value)
-        } else {
-            changeConfirmPassword(props.user.password)
-        }
+        changeConfirmPassword(e.currentTarget.value)
     }
     const updateFirstName = (e:any) => {
         e.preventDefault()
@@ -84,16 +72,32 @@ export const UpdateProfileComponent:FunctionComponent<any> = (props) =>{
         e.preventDefault() // always have to prevent default of refreshing the page
         if(password !== confirmPassword){
             toast.error('Passwords Do Not Match!')
+        } else if (username && props.user.image && !image){
+            toast.error('Please re-upload image so that file can be updated to match username!')
+        } else if (!username){
+            username = props.user.username
+            let updatedUser: User = { //assign values to new user
+              userId,
+              username,
+              password,
+              firstName,
+              lastName,
+              email,
+              role: "Member",
+              image 
+          }
+          let res = await lotrUpdateUser(updatedUser) //make sure endpoint returns new user
+          props.history.push(`/user/profile/${res.userId}`) //send too profile page (or elsewhere?)
         } else {
             let updatedUser: User = { //assign values to new user
-                userId: currentUserId,
+                userId,
                 username,
                 password,
                 firstName,
                 lastName,
                 email,
                 role: "Member",
-                image //need to add to models and user router!!!
+                image 
             }
             let res = await lotrUpdateUser(updatedUser) //make sure endpoint returns new user
             props.history.push(`/user/profile/${res.userId}`) //send too profile page (or elsewhere?)

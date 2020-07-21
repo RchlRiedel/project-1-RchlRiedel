@@ -22,25 +22,28 @@ export async function getUserByUserNameAndPasswordService(username:string, passw
 export async function saveNewUserService(newUser: User): Promise<User> {
     //two major process to manage in this function
     try {
-        let base64Image = newUser.image
-        let [dataType, imageBase64Data] = base64Image.split(';base64,')// gets us the two important parts of the base 64 string
-        //we need to make sure picture is in the right format
-        let contentType = dataType.split('/').pop()
-        //then the pop method gets us the last thing in the array
-        //we need to add the picture path to the user data in the sql database
-
-        if (newUser.image) {
+        if (newUser.image) { //avoid splitting a void string!
+            let base64Image = newUser.image
+            let [dataType, imageBase64Data] = base64Image.split(';base64,')// gets us the two important parts of the base 64 string
+            //we need to make sure picture is in the right format
+            let contentType = dataType.split('/').pop()
+            //then the pop method gets us the last thing in the array
             newUser.image = `${bucketBaseUrl}/LOTR_Profiles/${newUser.username}.${contentType}`
-        }
-        //we need to save new user data to the sql database
-        let savedUser = await saveNewUser(newUser)
-        //we need to save a picture to cloud storage 
-        await saveProfilePicture(contentType, imageBase64Data, `${bucketBaseUrl}/LOTR_Profiles/${newUser.username}.${contentType}`)
+            //we need to add the picture path to the user data in the sql database        
+            //we need to save new user data to the sql database
+            //we need to save a picture to cloud storage 
+            await saveProfilePicture(contentType, imageBase64Data, `LOTR_Profiles/${newUser.username}.${contentType}`)
         //spaces are ok in usernames (for file path) :D
 
         //with event driven design after I completed the save a user process
         //send an event saying tis done with the relevent info
         //expressEventEmitter.emit(customExpressEvents.NEW_USER, newUser)
+        
+        // } else {
+        //     newUser.image = 'https://storage.googleapis.com/project-1-rchlriedel-bucket/LOTR_Profiles/noname.jpg'
+        }
+        let savedUser = await saveNewUser(newUser)
+
         return savedUser
     } catch (e) {
         console.log(e)
@@ -52,18 +55,17 @@ export async function saveNewUserService(newUser: User): Promise<User> {
 
 export async function updateUserService(updatedUser: User): Promise<User>{
     try {
-        //essentially the above, but we are switching the dao fucntion and the input
-        let base64Image = updatedUser.image
-        let [dataType, imageBase64Data] = base64Image.split(';base64,')
-        let contentType = dataType.split('/').pop()
-
         if (updatedUser.image) {
+            //essentially the above, but we are switching the dao fucntion and the input
+            let base64Image = updatedUser.image
+            let [dataType, imageBase64Data] = base64Image.split(';base64,')
+            let contentType = dataType.split('/').pop()
+
             updatedUser.image = `${bucketBaseUrl}/LOTR_Profiles/${updatedUser.username}.${contentType}`
+
+            await saveProfilePicture(contentType, imageBase64Data, `LOTR_Profiles/${updatedUser.username}.${contentType}`)
         }
         let savedUser = await updateUser(updatedUser)
-       
-        await saveProfilePicture(contentType, imageBase64Data, `${bucketBaseUrl}/LOTR_Profiles/${updatedUser.username}.${contentType}`)
-        
         //expressEventEmitter.emit(customExpressEvents.NEW_USER, updatedUser)
         return savedUser
     } catch (e) {

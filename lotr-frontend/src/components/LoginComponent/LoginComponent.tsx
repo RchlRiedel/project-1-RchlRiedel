@@ -79,14 +79,13 @@ export const LoginComponent:FunctionComponent<ILoginProps> = (props) => {
                 />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                <Button
+                <CustomButton
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
                     className={classes.submit}
                 > Login
-                </Button>
+                </CustomButton>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                 <Link to= "/home" style={{ textDecoration:"none"}}>
@@ -94,7 +93,6 @@ export const LoginComponent:FunctionComponent<ILoginProps> = (props) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
                     className={classes.submit}
                 > Cancel 
                 </CustomButton>

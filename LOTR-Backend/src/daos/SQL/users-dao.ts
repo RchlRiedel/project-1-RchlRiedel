@@ -103,7 +103,7 @@ export async function getUserByUsernameAndPassword (username:String, password:St
     try{ 
         client = await connectionPool.connect()
         let results: QueryResult = await client.query(`select * from project_1.users u 
-                                                    where u.username = $1 and u.password = $2;`, [username, password])      
+                                                    where u.username = $1 and u."password" = $2;`, [username, password])      
         if (results.rowCount === 0){
             throw new Error("NotFound")
         } 

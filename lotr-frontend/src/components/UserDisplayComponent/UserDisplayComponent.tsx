@@ -12,10 +12,9 @@ const useStyles = makeStyles({ //customize this more!
     maxWidth:500
   },
   media: {
-    maxHeight: 300,
-    height:"100%",
-    width: "auto",
-    margin: "auto"
+    height:"auto",
+    width: "100%",
+    margin: "auto",
   },
   username: {
     fontSize: 20,
@@ -25,7 +24,7 @@ const useStyles = makeStyles({ //customize this more!
     color: "textSecondary",
     fontFamily: "Bookman Old Style"
   },
-});
+})
 
 export const UserDisplayComponent: FunctionComponent<IUserDisplayProps> = (props) =>{ 
     let classes = useStyles();

@@ -50,15 +50,18 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
         e.preventDefault() //do I need this?
         //type file has array called files, since you could upload multiple. Thus we speficy we want only want the first 
         let file:File = e.currentTarget.files[0]
-        //utlize FileReader - the old way of doing it without promises
-        let reader = new FileReader()
-        //start an async function on reader object
-        reader.readAsDataURL(file)
-        //set a callback for when it's done reading
-        reader.onload = () =>{
-            console.log(reader.result); //to see binary representation of the image
-            changeImage(reader.result)
+        if (file){
+          //utlize FileReader - the old way of doing it without promises
+          let reader = new FileReader()
+          //start an async function on reader object
+          reader.readAsDataURL(file)
+          //set a callback for when it's done reading
+          reader.onload = () =>{
+              console.log(reader.result); //to see binary representation of the image
+              changeImage(reader.result)
+          }
         }
+        
     }
 
     const submitUser = async (e:SyntheticEvent) => {
