@@ -59,11 +59,12 @@ export async function updateUserService(updatedUser: User): Promise<User>{
             let base64Image = updatedUser.image
             let [dataType, imageBase64Data] = base64Image.split(';base64,')
             let contentType = dataType.split('/').pop()
-
+            
+            await saveProfilePicture(contentType, imageBase64Data, `LOTR_Profiles/${updatedUser.username}.${contentType}`)
+            
             updatedUser.image = `${bucketBaseUrl}/LOTR_Profiles/${updatedUser.username}.${contentType}`
 
-            await saveProfilePicture(contentType, imageBase64Data, `LOTR_Profiles/${updatedUser.username}.${contentType}`)
-        }
+            }
         let savedUser = await updateUser(updatedUser)
         //expressEventEmitter.emit(customExpressEvents.NEW_USER, updatedUser)
         return savedUser
