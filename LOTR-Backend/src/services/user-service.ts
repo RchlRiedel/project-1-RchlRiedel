@@ -1,7 +1,7 @@
 import { User } from "../models/User";
 import { saveProfilePicture } from "../daos/Cloud-Storage/user-images";
 import { bucketBaseUrl } from "../daos/Cloud-Storage";
-//import { expressEventEmitter, customExpressEvents } from "../event-listeners";
+import { expressEventEmitter, customExpressEvents } from "../event-listeners";
 import { getAllUsers, findUsersById, saveNewUser, getUserByUsernameAndPassword, updateUser } from "../daos/SQL/users-dao";
 
 //the most basic service function you will see (all it does is call the dao)
@@ -34,15 +34,12 @@ export async function saveNewUserService(newUser: User): Promise<User> {
             //we need to save a picture to cloud storage 
             await saveProfilePicture(contentType, imageBase64Data, `LOTR_Profiles/${newUser.username}.${contentType}`)
         //spaces are ok in usernames (for file path) :D
-
-        //with event driven design after I completed the save a user process
-        //send an event saying tis done with the relevent info
-        //expressEventEmitter.emit(customExpressEvents.NEW_USER, newUser)
-        
-        // } else {
-        //     newUser.image = 'https://storage.googleapis.com/project-1-rchlriedel-bucket/LOTR_Profiles/noname.jpg'
         }
         let savedUser = await saveNewUser(newUser)
+        expressEventEmitter.emit(customExpressEvents.NEW_USER, newUser)
+        //with event driven design after I completed the save a user process
+        //send an event saying tis done with the relevent info
+        // (aka) send an event with relevant info, telling us we are done saving new user (only to internal server pieces)
         return savedUser
     } catch (e) {
         console.log(e)
@@ -60,13 +57,15 @@ export async function updateUserService(updatedUser: User): Promise<User>{
             let [dataType, imageBase64Data] = base64Image.split(';base64,')
             let contentType = dataType.split('/').pop()
             
-            await saveProfilePicture(contentType, imageBase64Data, `LOTR_Profiles/${updatedUser.username}.${contentType}`)
-            
             updatedUser.image = `${bucketBaseUrl}/LOTR_Profiles/${updatedUser.username}.${contentType}`
+
+            await saveProfilePicture(contentType, imageBase64Data, `LOTR_Profiles/${updatedUser.username}.${contentType}`)
 
             }
         let savedUser = await updateUser(updatedUser)
-        //expressEventEmitter.emit(customExpressEvents.NEW_USER, updatedUser)
+        console.log(updatedUser);
+        
+        expressEventEmitter.emit(customExpressEvents.UPDATED_USER, updatedUser)
         return savedUser
     } catch (e) {
         console.log(e)

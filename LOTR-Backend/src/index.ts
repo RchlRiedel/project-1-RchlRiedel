@@ -13,10 +13,10 @@ import { corsFilter } from "./middleware/cors-filter"
 import { saveNewUserService, getUserByUserNameAndPasswordService } from "./services/user-service"
 
 //import { userTopic } from "./messaging"
-// import { userTopic} from "./messaging"
-// import '.event-listeners/new-user'
+import './event-listeners/new-user.ts' //so that file will actually excetute 
+import './event-listeners/updated-user.ts' //try
 
-// console.log(userTopic);
+//console.log(userTopic); //see what the topic is
 
 const app = express() //our application from express
 

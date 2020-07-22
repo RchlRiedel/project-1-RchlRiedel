@@ -1,15 +1,14 @@
 import {EventEmitter} from "events"
 
-//special node js object
-//its purpose is to hold event listeners and to send event triggers to those listeners
+//EventEmitter = special node js object that holds event listeners and sends event triggers to them
+//call emit to send event, and any functions listening to that emitter will be triggered in order
 
-//we can call the emit() to send an event
-//any functions listening to that event on the emitter get triggered in order
 export const expressEventEmitter = new EventEmitter()
 
 //defines custom event (so we don't mistype it)
 export const customExpressEvents = {
-    NEW_USER: 'NEW_USER'
+    NEW_USER: 'NEW_USER',
+    UPDATED_USER: 'UPDATED_USER'
 }
 
 //call expressEventEmttier.emit(customExpressEvents.NEW_USER, newUser) in user services
