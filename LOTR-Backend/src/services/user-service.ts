@@ -43,7 +43,6 @@ export async function saveNewUserService(newUser: User): Promise<User> {
         //     newUser.image = 'https://storage.googleapis.com/project-1-rchlriedel-bucket/LOTR_Profiles/noname.jpg'
         }
         let savedUser = await saveNewUser(newUser)
-
         return savedUser
     } catch (e) {
         console.log(e)

@@ -32,9 +32,9 @@ app.use(sessionMiddleware)
 app.use("/users", userRouter)
 
 //health check! for load balancer 
-//app.get('/health', (req:Request,res:Response)=>{
-//     res.sendStatus(200)
-// })
+app.get('/health', (req:Request,res:Response)=>{
+    res.sendStatus(200)
+})
 
 
 //Save a new user (here to avoid authentification)
