@@ -1,4 +1,5 @@
 import axios from "axios"
+import { lotrBaseUrl } from "../environment"
 
 //for setting up the base axios client
 //axios allows us to build an object that holds all the base information/config for our connection to server
@@ -6,7 +7,7 @@ import axios from "axios"
 
 //we will use this to send all requests we make to the lightlyburnding api
 export const lotrClient = axios.create ({
-    baseURL: 'http://localhost:2007',
+    baseURL: lotrBaseUrl,
     headers:{
         'Content-Type': 'application/json'
     },
