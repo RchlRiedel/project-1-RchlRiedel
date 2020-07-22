@@ -1,5 +1,5 @@
 import { User } from "../models/User";
-import { userTopic } from "../messaging";
+import { updatedUserTopic } from "../messaging";
 import { customExpressEvents, expressEventEmitter } from ".";
 
 //custom event listener that will fire when someone emits a New User Event
@@ -38,7 +38,7 @@ expressEventEmitter.on(customExpressEvents.UPDATED_USER, (updatedUser: User) =>{
             }     
             
             
-            let res = await userTopic.publishJSON(updatedUserInfo) 
+            let res = await updatedUserTopic.publishJSON(updatedUserInfo) 
             //publishJSON is specifically buffering JSON for you
             //subscriptions always return message data in the form of a buffer,soooooooo..... look at documentation
             console.log(res)
