@@ -4,7 +4,7 @@ export let lotrBaseUrl:string
 if(process.env['NODE_ENV'] === 'production'){
     //if we ran npm run build
     //use the deployed address
-    lotrBaseUrl = 'http://35.236.234.77:2007'
+    lotrBaseUrl = 'http://lotr-project.lehcar.net'
 }else {
     //we are in test or dev, use the local address
     lotrBaseUrl = 'http://localhost:2007'
