@@ -21,7 +21,7 @@ export const UpdateProfileComponent:FunctionComponent<any> = (props) =>{
     let [firstName, changeFirstName] = useState("")
     let [lastName, changeLastName] = useState("")
     let [email, changeEmail] = useState("")
-    let [image, changeImage] = useState(null)
+    let [image, changeImage] = useState(undefined)
 
     const updateUsername = (e:any) => {
         e.preventDefault()
@@ -156,7 +156,7 @@ export const UpdateProfileComponent:FunctionComponent<any> = (props) =>{
                   variant="outlined"
                   fullWidth
                   id="email"
-                  label="Change Email"
+                  label="Change Email/include for email with updated info"
                   name="email"
                   value={email}
                   onChange={updateEmail}

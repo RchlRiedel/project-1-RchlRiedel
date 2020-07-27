@@ -138,6 +138,7 @@ export const SignUpComponent:FunctionComponent<ISignInProps> = (props) =>{
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
+                  required
                   fullWidth
                   id="email"
                   label="Email"

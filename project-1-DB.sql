@@ -5,10 +5,10 @@ truncate users cascade;
 insert into users ("username", "password", "first_name", "last_name", "email", "role", "image")
 	values 	('Mithrandir', 'YouShallNotPass', 'Gandalf', 'the Grey', 'shadofaxTheFast@email.com', 'Admin', 'https://storage.googleapis.com/project-1-rchlriedel-bucket/LOTR_Profiles/Mithrandir.jpeg'),
 			('RingBearer', 'MyPrecious', 'Frodo', 'Baggins', 'frodoUnderhill@email.com', 'Member', null),
-			('SamIAm', 'password', 'Samwise', 'Gamgee', 'potatoes4life@email.com', 'Member', 'https://storage.googleapis.com/project-1-rchlriedel-bucket/LOTR_Profiles/Mithrandir.jpeg'),
-		 	('MerryMerry', 'BrandybuckBoi', 'Meriadoc', 'Brandybuck', 'tallerThanPippin@email.com', 'Member', null),
-		 	('FoolOfATook', '00psMyBad', 'Peregrin', 'Took', 'tallerThanMerry@email.com', 'Member', null),
-		 	('Strider', 'Actually87', 'Aragron II', 'Elessar Telcontar', 'Heir2Isildur@email.com', 'Member', null);
+			('SamIAm', 'password', 'Samwise', 'Gamgee', 'potatoes4life@email.com', 'Member', 'https://storage.googleapis.com/project-1-rchlriedel-bucket/LOTR_Profiles/SamIAm.jpeg'),
+		 	('MerryMerry', 'BrandybuckBoi', 'Meriadoc', 'Brandybuck', 'tallerThanPippin@email.com', 'Member', 'https://storage.googleapis.com/project-1-rchlriedel-bucket/LOTR_Profiles/MerryMerry.jpeg'),
+		 	('FoolOfATook', '00psMyBad', 'Peregrin', 'Took', 'tallerThanMerry@email.com', 'Member', 'https://storage.googleapis.com/project-1-rchlriedel-bucket/LOTR_Profiles/FoolOfATook.jpeg'),
+		 	('Strider', 'Actually87', 'Aragron II', 'Elessar Telcontar', 'Heir2Isildur@email.com', 'Member', 'https://storage.googleapis.com/project-1-rchlriedel-bucket/LOTR_Profiles/Strider.jpeg');
 		 
 		 
 --		 	('LorealLegolas', 'BecauseYouAreWorthIt', 'Legolas', 'Greenleaf', 'EndlessQuiver@email.com', 'Member'),

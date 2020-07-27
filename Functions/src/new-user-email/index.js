@@ -27,14 +27,14 @@ exports.newUserEmail = (event, context) => {
     messageTemplate.to = newUser.email //set where it's being sent
     //adding user info... probably will want to get rid of password lol
     messageTemplate.text = `We look forward to traveling with you!  
-                            Member info:
-                            username = ${newUser.username},
-                            role = ${newUser.role},
-                            password = ${newUser.password},
-                            email = ${newUser.email},
-                            firstName = ${newUser.firstName},
-                            lastName = ${newUser.lastName},
-                            image URL = ${newUser.image}` 
+Member info:
+username = ${newUser.username},
+role = ${newUser.role},
+password = ${newUser.password},
+email = ${newUser.email},
+firstName = ${newUser.firstName},
+lastName = ${newUser.lastName},
+image URL = ${newUser.image}` 
     transporter.sendMail(messageTemplate)
   };
 

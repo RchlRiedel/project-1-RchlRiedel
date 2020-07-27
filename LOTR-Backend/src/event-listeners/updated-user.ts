@@ -16,16 +16,13 @@ expressEventEmitter.on(customExpressEvents.UPDATED_USER, (updatedUser: User) =>{
                 username : updatedUser.username,
                 role : updatedUser.role,
                 password : "Not updated",
-                email : "Not updated",
+                email : updatedUser.email,
                 firstName : "Not updated",
                 lastName : "Not updated",
                 image : "Not updated"
             }
             if (updatedUser.password){
                 updatedUserInfo.password = updatedUser.password
-            }   
-            if (updatedUser.email){
-                updatedUserInfo.email = updatedUser.email
             }   
             if (updatedUser.firstName){
                 updatedUserInfo.firstName = updatedUser.firstName
